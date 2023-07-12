@@ -14,7 +14,6 @@ public class Film {
             "duration_in_minutes", "durationInMinutes",
             "file_id", "fileId"
     );
-
     private int id;
     private String name;
     private String description;

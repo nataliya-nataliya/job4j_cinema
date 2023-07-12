@@ -3,6 +3,7 @@ package ru.job4j.cinema.model;
 import java.util.Objects;
 
 public class Genre {
+
     private int id;
     private String name;
 
