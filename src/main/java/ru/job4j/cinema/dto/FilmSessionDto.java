@@ -1,25 +1,18 @@
 package ru.job4j.cinema.dto;
 
-import java.time.LocalDateTime;
-
 public class FilmSessionDto {
     private int id;
     private String name;
-    private FileDto fileId;
-    private int hallsId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
     private int price;
+    private int fileId;
 
-    public FilmSessionDto(int id, String name, FileDto fileId, int hallsId,
-                          LocalDateTime startTime, LocalDateTime endTime, int price) {
+    public FilmSessionDto(int id, String name, String startTime, int price, int fileId) {
         this.id = id;
         this.name = name;
-        this.fileId = fileId;
-        this.hallsId = hallsId;
         this.startTime = startTime;
-        this.endTime = endTime;
         this.price = price;
+        this.fileId = fileId;
     }
 
     public int getId() {
@@ -38,36 +31,12 @@ public class FilmSessionDto {
         this.name = name;
     }
 
-    public FileDto getFileId() {
-        return fileId;
-    }
-
-    public void setFileId(FileDto fileId) {
-        this.fileId = fileId;
-    }
-
-    public int getHallsId() {
-        return hallsId;
-    }
-
-    public void setHallsId(int hallsId) {
-        this.hallsId = hallsId;
-    }
-
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     public int getPrice() {
@@ -76,5 +45,13 @@ public class FilmSessionDto {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 }

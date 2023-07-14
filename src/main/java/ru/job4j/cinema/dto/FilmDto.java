@@ -6,17 +6,17 @@ public class FilmDto {
     private String description;
     private int year;
     private int minimalAge;
-    private int durationInMinutes;
+    private String formatDuration;
     private String genre;
 
     public FilmDto(int id, String name, String description, int year, int minimalAge,
-                   int durationInMinutes, String genre) {
+                   String formatDuration, String genre) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.year = year;
         this.minimalAge = minimalAge;
-        this.durationInMinutes = durationInMinutes;
+        this.formatDuration = formatDuration;
         this.genre = genre;
     }
 
@@ -60,12 +60,12 @@ public class FilmDto {
         this.minimalAge = minimalAge;
     }
 
-    public int getDurationInMinutes() {
-        return durationInMinutes;
+    public String getFormatDuration() {
+        return formatDuration;
     }
 
-    public void setDurationInMinutes(int durationInMinutes) {
-        this.durationInMinutes = durationInMinutes;
+    public void setFormatDuration(String formatDuration) {
+        this.formatDuration = formatDuration;
     }
 
     public String getGenre() {

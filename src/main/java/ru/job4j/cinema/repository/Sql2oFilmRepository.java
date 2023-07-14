@@ -27,12 +27,8 @@ public class Sql2oFilmRepository implements FilmRepository {
     @Override
     public Optional<Film> findById(int id) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery(
-                    "SELECT films.id, films.name, films.description, films.year, "
-                            + "films.minimal_age AS minimalAge, "
-                            + "films.duration_in_minutes AS durationInMinutes,"
-                            + " genres.name FROM films JOIN genres ON genres.id = films.genre_id"
-                            + " WHERE films.id = :id");
+            var query = connection.createQuery("SELECT * FROM films WHERE id = :id")
+                            .setColumnMappings(Film.COLUMN_MAPPING);
             var film = query.addParameter("id", id).executeAndFetchFirst(Film.class);
             return Optional.ofNullable(film);
         }

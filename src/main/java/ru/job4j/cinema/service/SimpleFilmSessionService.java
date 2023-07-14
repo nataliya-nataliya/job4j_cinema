@@ -5,8 +5,9 @@ import ru.job4j.cinema.dto.FilmSessionDto;
 import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.repository.FilmRepository;
 import ru.job4j.cinema.repository.FilmSessionRepository;
-import ru.job4j.cinema.repository.HallRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,15 +17,17 @@ public class SimpleFilmSessionService implements FilmSessionService {
     private final FilmSessionRepository filmSessionRepository;
     private final FilmRepository filmRepository;
     private final FileService fileService;
-    private final HallRepository hallRepository;
 
     public SimpleFilmSessionService(FilmSessionRepository filmSessionRepository,
-                                    FilmRepository filmRepository, FileService fileService,
-                                    HallRepository hallRepository) {
+                                    FilmRepository filmRepository, FileService fileService) {
         this.filmSessionRepository = filmSessionRepository;
         this.filmRepository = filmRepository;
         this.fileService = fileService;
-        this.hallRepository = hallRepository;
+    }
+
+    public String formatLocalDateTime(LocalDateTime startTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        return startTime.format(formatter);
     }
 
     @Override
@@ -33,9 +36,10 @@ public class SimpleFilmSessionService implements FilmSessionService {
         for (FilmSession filmSession : filmSessionRepository.findAll()) {
             filmSessionDto.add(new FilmSessionDto(filmSession.getId(),
                     filmRepository.findById(filmSession.getFilmId()).get().getName(),
-                    fileService.getFileById(filmSession.getFilmId()).get(),
-                    filmSession.getHallId(), filmSession.getStartTime(), filmSession.getEndTime(),
-                    filmSession.getPrice()));
+                    formatLocalDateTime(filmSession.getStartTime()),
+                    filmSession.getPrice(),
+                    filmSession.getFilmId()
+            ));
         }
         return filmSessionDto;
     }

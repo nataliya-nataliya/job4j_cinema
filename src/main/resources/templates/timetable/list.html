@@ -23,12 +23,24 @@
     <div class="container">
         <div class="row">
             <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name of film</th>
+                    <th scope="col">Date and time of session</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Movie poster</th>
+                </tr>
+                </thead>
                 <tbody>
                 <tr th:each="filmSession: ${timetable}">
                     <td th:text="${filmSession.id}"/>
+                    <td th:text="${filmSession.name}"/>
+                    <td th:text="${filmSession.startTime}"/>
+                    <td th:text="${filmSession.price}"/>
                     <td>
                         <div class="mb-3">
-                        <img th:src="@{/files/{fileId}(fileId=${filmSession.fileId.name})}" class="w-100" alt="No image"/>
+                        <img th:src="@{/files/{fileId}(fileId=${filmSession.fileId})}" style="width: 20%; height: auto;" alt="No image"/>
                         </div>
                     </td>
                 </tr>

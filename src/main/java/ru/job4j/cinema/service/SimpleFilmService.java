@@ -20,15 +20,22 @@ public class SimpleFilmService implements FilmService {
         this.genreRepository = genreRepository;
     }
 
+    public String convertMinutesToHours(int durationInMinutes) {
+        int hours = durationInMinutes / 60;
+        int remainingMinutes = durationInMinutes % 60;
+        return String.format("%s hour(s) %s minute(s)", hours, remainingMinutes);
+    }
+
     @Override
     public Collection<FilmDto> findAll() {
-        List<FilmDto> filmDtos = new ArrayList<>();
+        List<FilmDto> filmsDto = new ArrayList<>();
         for (Film film : filmRepository.findAll()) {
-            filmDtos.add(new FilmDto(film.getId(), film.getName(), film.getDescription(),
+            filmsDto.add(new FilmDto(film.getId(), film.getName(), film.getDescription(),
                     film.getYear(),
-                    film.getMinimalAge(), film.getDurationInMinutes(),
+                    film.getMinimalAge(),
+                    convertMinutesToHours(film.getDurationInMinutes()),
                     genreRepository.findById(film.getId()).get().getName()));
         }
-        return filmDtos;
+        return filmsDto;
     }
 }

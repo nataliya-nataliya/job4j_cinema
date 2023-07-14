@@ -24,6 +24,15 @@
         <div class="row">
             <table class="table">
                 <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name of film</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Minimal age</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Genre</th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr th:each="film: ${films}">
@@ -32,7 +41,7 @@
                     <td th:text="${film.description}"/>
                     <td th:text="${film.year}"/>
                     <td th:text="${film.minimalAge}"/>
-                    <td th:text="${film.durationInMinutes}"/>
+                    <td th:text="${film.formatDuration}"/>
                     <td th:text="${film.genre}"/>
                 </tr>
                 </tbody>
