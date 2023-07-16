@@ -5,13 +5,18 @@ public class FilmSessionDto {
     private String name;
     private String startTime;
     private int price;
+    private String nameHall;
+    private int hallId;
     private int fileId;
 
-    public FilmSessionDto(int id, String name, String startTime, int price, int fileId) {
+    public FilmSessionDto(int id, String name, String startTime, int price,
+                          String nameHall, int hallId, int fileId) {
         this.id = id;
         this.name = name;
         this.startTime = startTime;
         this.price = price;
+        this.nameHall = nameHall;
+        this.hallId = hallId;
         this.fileId = fileId;
     }
 
@@ -39,12 +44,28 @@ public class FilmSessionDto {
         this.startTime = startTime;
     }
 
+    public String getNameHall() {
+        return nameHall;
+    }
+
+    public void setNameHall(String nameHall) {
+        this.nameHall = nameHall;
+    }
+
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
     }
 
     public int getFileId() {

@@ -24,4 +24,9 @@ public class SimpleTicketService implements TicketService {
     public Optional<Ticket> findById(int id) {
         return Optional.of(ticketRepository.findById(id)).get();
     }
+
+    @Override
+    public Optional<Ticket> save(Ticket ticket) {
+        return ticketRepository.save(ticket);
+    }
 }

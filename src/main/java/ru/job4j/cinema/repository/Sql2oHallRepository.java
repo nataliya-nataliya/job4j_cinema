@@ -17,7 +17,8 @@ public class Sql2oHallRepository implements HallRepository {
     @Override
     public Optional<Hall> findById(int id) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("SELECT * FROM halls WHERE id = :id");
+            var query = connection.createQuery("SELECT * FROM halls WHERE id = :id")
+                    .setColumnMappings(Hall.COLUMN_MAPPING);
             var hall = query.addParameter("id", id).executeAndFetchFirst(Hall.class);
             return Optional.ofNullable(hall);
         }

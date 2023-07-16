@@ -20,7 +20,7 @@ public class SimpleFilmService implements FilmService {
         this.genreRepository = genreRepository;
     }
 
-    public String convertMinutesToHours(int durationInMinutes) {
+    private String convertMinutesToHours(int durationInMinutes) {
         int hours = durationInMinutes / 60;
         int remainingMinutes = durationInMinutes % 60;
         return String.format("%s hour(s) %s minute(s)", hours, remainingMinutes);
@@ -34,7 +34,8 @@ public class SimpleFilmService implements FilmService {
                     film.getYear(),
                     film.getMinimalAge(),
                     convertMinutesToHours(film.getDurationInMinutes()),
-                    genreRepository.findById(film.getId()).get().getName()));
+                    genreRepository.findById(film.getId()).get().getName(),
+                    film.getFileId()));
         }
         return filmsDto;
     }
