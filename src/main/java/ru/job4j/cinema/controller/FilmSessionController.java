@@ -8,6 +8,8 @@ import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.HallService;
 import ru.job4j.cinema.service.TicketService;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/timetable")
 public class FilmSessionController {
@@ -29,26 +31,28 @@ public class FilmSessionController {
     }
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
+    public String getById(Model model, @PathVariable int id, HttpSession session) {
         var filmSessionOptional = filmSessionService.findById(id);
         if (filmSessionOptional.isEmpty()) {
             model.addAttribute("message", "There is no such film session id");
             return "errors/404";
         }
         var hallOptional = hallService.findById(filmSessionOptional.get().getHallId());
-        model.addAttribute("tickets", ticketService.findAll());
+        model.addAttribute("ticket", new Ticket());
         model.addAttribute("filmSession", filmSessionOptional.get());
         model.addAttribute("hall", hallOptional.get());
         return "timetable/one";
     }
 
     @PostMapping("/buy")
-    public String register(Model model, @ModelAttribute Ticket ticket) {
-        var savedUser = ticketService.save(ticket);
-        if (savedUser.isEmpty()) {
-            model.addAttribute("message", "The ticket for this row and seat is already taken.");
+    public String buy(Model model, @ModelAttribute Ticket ticket) {
+        var savedTicket = ticketService.save(ticket);
+        if (savedTicket.isEmpty()) {
+            model.addAttribute("message", String.format(
+                    "The ticket for %d row and %d seat is already taken. Select other places",
+                    ticket.getRowNumber(), ticket.getPlaceNumber()));
             return "errors/404";
         }
-        return "redirect:/index";
+        return String.format("redirect:/tickets/%s", savedTicket.get().getId());
     }
 }

@@ -8,7 +8,14 @@
                     <a class="nav-item nav-link active" th:href="@{/films}">Films</a>
                     <a class="nav-item nav-link active" th:href="@{/timetable}">Timetable</a>
                 </div>
-
+                <div class="d-flex" th:if="${user.fullName == 'Guest'}">
+                    <a class="nav-link text-light me-3" th:href="@{/users/register}">Create account</a>
+                    <a class="nav-link text-light" th:href="@{/users/login}">Sign up</a>
+                </div>
+                <div class="d-flex" th:if="${user.fullName != 'Guest'}">
+                    <a class="nav-link text-secondary me-3" href="#" th:text="${user.fullName}"></a>
+                    <a class="nav-link text-secondary" th:href="@{/users/logout}">Log Out</a>
+                </div>
             </div>
         </div>
     </nav>
