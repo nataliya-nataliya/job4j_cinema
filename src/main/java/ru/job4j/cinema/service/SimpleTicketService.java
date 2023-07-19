@@ -29,4 +29,9 @@ public class SimpleTicketService implements TicketService {
     public Optional<Ticket> save(Ticket ticket) {
         return ticketRepository.save(ticket);
     }
+
+    public boolean deleteAll() {
+        return ticketRepository.deleteAll();
+    }
+
 }

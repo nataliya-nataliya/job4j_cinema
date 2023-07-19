@@ -25,30 +25,30 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col">Movie poster</th>
                     <th scope="col">Name of film</th>
                     <th scope="col">Description</th>
                     <th scope="col">Year</th>
-                    <th scope="col">Minimal age</th>
+                    <th scope="col">Cinema age rating</th>
                     <th scope="col">Duration</th>
                     <th scope="col">Genre</th>
-                    <th scope="col">Poster</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="film, rowIndex : ${films}"
                     th:style="${rowIndex.even} ? 'background-color: #eaf5ea;' : 'background-color: #ffffff;'">
+                    <td style="padding: 0;">
+                        <div class="mb-3" style="margin: 10px 0;">
+                            <img th:src="@{/files/{fileId}(fileId=${film.fileId})}"
+                                 style="max-width: 100px; height: auto;" alt="No image"/>
+                        </div>
+                    </td>
                     <td th:text="${film.name}"/>
                     <td th:text="${film.description}"/>
                     <td th:text="${film.year}"/>
                     <td th:text="${film.minimalAge}"/>
                     <td th:text="${film.formatDuration}"/>
                     <td th:text="${film.genre}"/>
-                    <td>
-                        <div class="mb-3">
-                            <img th:src="@{/files/{fileId}(fileId=${film.fileId})}"
-                                 style="width: 20%; height: auto;" alt="No image"/>
-                        </div>
-                    </td>
                 </tr>
                 </tbody>
             </table>

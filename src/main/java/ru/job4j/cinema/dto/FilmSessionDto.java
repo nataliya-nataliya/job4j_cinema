@@ -3,6 +3,8 @@ package ru.job4j.cinema.dto;
 public class FilmSessionDto {
     private int id;
     private String name;
+    private int filmId;
+    private String description;
     private String startTime;
     private String endTime;
     private int price;
@@ -10,10 +12,13 @@ public class FilmSessionDto {
     private int hallId;
     private int fileId;
 
-    public FilmSessionDto(int id, String name, String startTime, String endTime, int price,
+    public FilmSessionDto(int id, String name, int filmId, String description, String startTime,
+                          String endTime, int price,
                           String nameHall, int hallId, int fileId) {
         this.id = id;
         this.name = name;
+        this.filmId = filmId;
+        this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
@@ -36,6 +41,22 @@ public class FilmSessionDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getFilmId() {
+        return filmId;
+    }
+
+    public void setFilmId(int filmId) {
+        this.filmId = filmId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStartTime() {

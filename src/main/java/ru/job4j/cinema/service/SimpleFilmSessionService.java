@@ -40,6 +40,8 @@ public class SimpleFilmSessionService implements FilmSessionService {
         for (FilmSession filmSession : filmSessionRepository.findAll()) {
             filmSessionDto.add(new FilmSessionDto(filmSession.getId(),
                     filmRepository.findById(filmSession.getFilmId()).get().getName(),
+                    filmSession.getFilmId(),
+                    filmRepository.findById(filmSession.getFilmId()).get().getDescription(),
                     formatLocalDateTime(filmSession.getStartTime()),
                     formatLocalDateTime(filmSession.getEndTime()),
                     filmSession.getPrice(),
@@ -59,6 +61,9 @@ public class SimpleFilmSessionService implements FilmSessionService {
         }
         return Optional.of(new FilmSessionDto(filmSessionOptional.get().getId(),
                 filmRepository.findById(filmSessionOptional.get().getFilmId()).get().getName(),
+                filmSessionOptional.get().getFilmId(),
+                filmRepository.findById(filmSessionOptional.get().getFilmId())
+                        .get().getDescription(),
                 formatLocalDateTime(filmSessionOptional.get().getStartTime()),
                 formatLocalDateTime(filmSessionOptional.get().getEndTime()),
                 filmSessionOptional.get().getPrice(),

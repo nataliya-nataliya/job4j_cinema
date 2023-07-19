@@ -9,6 +9,7 @@ import ru.job4j.cinema.repository.GenreRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SimpleFilmService implements FilmService {
@@ -38,5 +39,22 @@ public class SimpleFilmService implements FilmService {
                     film.getFileId()));
         }
         return filmsDto;
+    }
+
+    @Override
+    public Optional<FilmDto> findById(int id) {
+        var filmOptional = filmRepository.findById(id);
+        if (filmOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(new FilmDto(filmOptional.get().getId(),
+                filmOptional.get().getName(),
+                filmOptional.get().getDescription(),
+                filmOptional.get().getYear(),
+                filmOptional.get().getMinimalAge(),
+                convertMinutesToHours(filmOptional.get().getDurationInMinutes()),
+                genreRepository.findById(filmOptional.get().getGenreId()).get().getName(),
+                filmOptional.get().getFileId())
+        );
     }
 }
