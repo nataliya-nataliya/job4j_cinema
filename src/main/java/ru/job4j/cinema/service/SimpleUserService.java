@@ -11,8 +11,8 @@ import java.util.Optional;
 public class SimpleUserService implements UserService {
     private final UserRepository userRepository;
 
-    private SimpleUserService(UserRepository sql2oCandidateRepository) {
-        this.userRepository = sql2oCandidateRepository;
+    private SimpleUserService(UserRepository sql2oFilmRepository) {
+        this.userRepository = sql2oFilmRepository;
     }
 
     @Override

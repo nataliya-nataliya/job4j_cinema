@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.job4j.cinema.service.FilmService;
 import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.TicketService;
 
@@ -16,7 +15,7 @@ public class TicketController {
     private final TicketService ticketService;
 
     public TicketController(FilmSessionService filmSessionService,
-                            TicketService ticketService, FilmService filmService) {
+                            TicketService ticketService) {
         this.filmSessionService = filmSessionService;
         this.ticketService = ticketService;
     }
@@ -29,8 +28,9 @@ public class TicketController {
             return "errors/404";
         }
         var filmSessionOptional = filmSessionService.findById(ticketOptional.get().getSessionId());
-        model.addAttribute("filmSession", filmSessionOptional.get());
         model.addAttribute("ticket", ticketOptional.get());
+        filmSessionOptional.ifPresent(filmSession -> model.addAttribute(
+                "filmSession", filmSession));
         return "tickets/one";
     }
 }

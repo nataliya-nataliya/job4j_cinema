@@ -40,12 +40,10 @@ public class FilmSessionController {
         }
         var hallOptional = hallService.findById(filmSessionOptional.get().getHallId());
         var filmOptional = filmService.findById(filmSessionOptional.get().getFilmId());
-
-        model.addAttribute("ticket", new Ticket());
         model.addAttribute("filmSession", filmSessionOptional.get());
-        model.addAttribute("film", filmOptional.get());
-
-        model.addAttribute("hall", hallOptional.get());
+        model.addAttribute("ticket", new Ticket());
+        hallOptional.ifPresent(hall -> model.addAttribute("hall", hall));
+        filmOptional.ifPresent(film -> model.addAttribute("film", film));
         return "timetable/one";
     }
 
@@ -58,6 +56,6 @@ public class FilmSessionController {
                     ticket.getRowNumber(), ticket.getPlaceNumber()));
             return "errors/404";
         }
-        return String.format("redirect:/tickets/%s", savedTicket.get().getId());
+        return String.format("redirect:/tickets/%d", savedTicket.get().getId());
     }
 }
