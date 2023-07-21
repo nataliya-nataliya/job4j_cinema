@@ -2,9 +2,8 @@ package ru.job4j.cinema.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.TicketService;
 
@@ -32,5 +31,17 @@ public class TicketController {
         filmSessionOptional.ifPresent(filmSession -> model.addAttribute(
                 "filmSession", filmSession));
         return "tickets/one";
+    }
+
+    @PostMapping("/buy")
+    public String buy(Model model, @ModelAttribute Ticket ticket) {
+        var savedTicket = ticketService.save(ticket);
+        if (savedTicket.isEmpty()) {
+            model.addAttribute("message", String.format(
+                    "The ticket for %d row and %d seat is already taken. Select other places",
+                    ticket.getRowNumber(), ticket.getPlaceNumber()));
+            return "errors/409";
+        }
+        return String.format("redirect:/tickets/%d", savedTicket.get().getId());
     }
 }

@@ -31,8 +31,9 @@ public class UserController {
     public String register(Model model, @ModelAttribute User user) {
         var savedUser = userService.save(user);
         if (savedUser.isEmpty()) {
-            model.addAttribute("message", "User with this email already exists");
-            return "errors/404";
+            model.addAttribute("error", "User with this email already exists");
+            user.setFullName("Guest");
+            return "users/register";
         }
         return "redirect:/index";
     }
@@ -47,6 +48,7 @@ public class UserController {
         var userOptional = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "Wrong email or password");
+            user.setFullName("Guest");
             return "users/login";
         }
         var session = request.getSession();

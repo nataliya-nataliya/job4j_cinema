@@ -46,16 +46,4 @@ public class FilmSessionController {
         filmOptional.ifPresent(film -> model.addAttribute("film", film));
         return "timetable/one";
     }
-
-    @PostMapping("/buy")
-    public String buy(Model model, @ModelAttribute Ticket ticket) {
-        var savedTicket = ticketService.save(ticket);
-        if (savedTicket.isEmpty()) {
-            model.addAttribute("message", String.format(
-                    "The ticket for %d row and %d seat is already taken. Select other places",
-                    ticket.getRowNumber(), ticket.getPlaceNumber()));
-            return "errors/404";
-        }
-        return String.format("redirect:/tickets/%d", savedTicket.get().getId());
-    }
 }

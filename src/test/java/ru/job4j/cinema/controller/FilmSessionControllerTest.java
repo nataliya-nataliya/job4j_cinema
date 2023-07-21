@@ -2,11 +2,9 @@ package ru.job4j.cinema.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.ui.ConcurrentModel;
 import ru.job4j.cinema.dto.FilmSessionDto;
 import ru.job4j.cinema.model.FilmSession;
-import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.service.FilmService;
 import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.HallService;
@@ -66,39 +64,6 @@ public class FilmSessionControllerTest {
 
         assertThat(view).isEqualTo("timetable/one");
         assertThat(actualFilmSessions).isEqualTo(filmSession);
-    }
-
-    @Test
-    public void whenPostFilmSessionThenSaveTicketAndRedirectToTicketsIdPage() throws Exception {
-        var ticket = new Ticket(1, 1, 1, 1, 1);
-        var ticketArgumentCaptor = ArgumentCaptor.forClass(Ticket.class);
-        when(ticketService.save(ticketArgumentCaptor.capture()))
-                .thenReturn(Optional.of(ticket));
-
-        var model = new ConcurrentModel();
-        var view = filmSessionController.buy(model, ticket);
-        var actualTicket = ticketArgumentCaptor.getValue();
-
-        assertThat(view).isEqualTo(String.format("redirect:/tickets/%d", ticket.getId()));
-        assertThat(actualTicket).isEqualTo(ticket);
-    }
-
-    @Test
-    public void whenSomeExceptionThrownUponSeatIsTakenAndThenGetErrorPageWithMessage() {
-        var ticket = new Ticket(1, 1, 1, 2, 1);
-
-        var expectedException = new RuntimeException(
-                String.format(
-                        "The ticket for %d row and %d seat is already taken. Select other places",
-                        ticket.getRowNumber(), ticket.getPlaceNumber()));
-        when(filmSessionService.findById(1)).thenThrow(expectedException);
-
-        var model = new ConcurrentModel();
-        var view = filmSessionController.buy(model, ticket);
-        var actualExceptionMessage = model.getAttribute("message");
-
-        assertThat(view).isEqualTo("errors/404");
-        assertThat(actualExceptionMessage).isEqualTo(expectedException.getMessage());
     }
 
     @Test

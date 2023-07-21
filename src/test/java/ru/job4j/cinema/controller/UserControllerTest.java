@@ -55,9 +55,9 @@ class UserControllerTest {
 
         var model = new ConcurrentModel();
         var view = userController.register(model, new User());
-        var actualExceptionMessage = model.getAttribute("message");
+        var actualExceptionMessage = model.getAttribute("error");
 
-        assertThat(view).isEqualTo("errors/404");
+        assertThat(view).isEqualTo("users/register");
         assertThat(actualExceptionMessage).isEqualTo(expectedException.getMessage());
     }
 
